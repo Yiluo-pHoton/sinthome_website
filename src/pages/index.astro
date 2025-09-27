@@ -7,21 +7,23 @@ import WarpBackground from "../components/ui/WarpBackground";
 	<main class="homepage-main">
 		<div id="homepage-container" class="group relative w-full h-dvh flex items-center justify-center overflow-hidden">
 			<div class="absolute w-full h-dvh -z-10">
-				{/* Zero softness configuration with sharper edges */}
-				<WarpBackground
-					color1="#000000"
-					color2="#a80000"
-					color3="#000000"
-					speed={0.3}
-					swirl={0.98}
-					swirlIterations={31}
-					shapeScale={0.04}
-					rotation={0.85}
-					scale={0.1}
-					softness={0}
-					distortion={0}
-					client:load
-				/>
+				{/* Enhanced Warp with directional movement */}
+				<div class="warp-container">
+					<WarpBackground
+						color1="#240000"
+						color2="#a80000"
+						color3="#000000"
+						speed={0.15}
+						swirl={0.84}
+						swirlIterations={50}
+						shapeScale={0.62}
+						rotation={0}
+						scale={0.1}
+						softness={0}
+						distortion={0}
+						client:load
+					/>
+				</div>
 			</div>
 
 			<div class="absolute w-full h-dvh flex flex-col justify-center items-center z-10">
@@ -250,6 +252,57 @@ import WarpBackground from "../components/ui/WarpBackground";
 		height: 100vh;
 		overflow: hidden;
 	}
+
+	/* Directional animation for Warp background */
+	.warp-container {
+		width: 150%; /* Make wider to allow for movement */
+		height: 150%; /* Make taller to allow for movement */
+		position: absolute;
+		top: -25%;
+		left: -25%;
+		animation: drift 30s ease-in-out infinite;
+	}
+
+	/* Slow drift animation - creates a subtle directional movement */
+	@keyframes drift {
+		0%, 100% {
+			transform: translate(0, 0);
+		}
+		25% {
+			transform: translate(10%, 5%);
+		}
+		50% {
+			transform: translate(5%, 15%);
+		}
+		75% {
+			transform: translate(15%, 10%);
+		}
+	}
+
+	/* Alternative: Linear diagonal movement */
+	@keyframes diagonalDrift {
+		0% {
+			transform: translate(-10%, -10%);
+		}
+		100% {
+			transform: translate(10%, 10%);
+		}
+	}
+
+	/* Alternative: Horizontal slide */
+	@keyframes horizontalSlide {
+		0% {
+			transform: translateX(-10%);
+		}
+		100% {
+			transform: translateX(10%);
+		}
+	}
+
+	/* To use different animations, change the animation property:
+	   - For diagonal: animation: diagonalDrift 20s linear infinite alternate;
+	   - For horizontal: animation: horizontalSlide 15s ease-in-out infinite alternate;
+	*/
 
 	/* Custom fade-in animation */
 	@keyframes fadeInUp {
